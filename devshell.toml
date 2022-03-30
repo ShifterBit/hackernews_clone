@@ -1,0 +1,28 @@
+# https://numtide.github.io/devshell
+[devshell]
+packages = [
+  "elixir",
+  "erlang",
+  "sqlite",
+  "litecli",
+]
+
+
+[[commands]]
+package = "devshell.cli"
+help = "Per project developer environments"
+
+[[commands]]
+package = "sqlite"
+
+[[commands]]
+package = "litecli"
+
+[[commands]]
+package = "elixir"
+name = "mix"
+help = "A build automation tool for working with applications written in the Elixir programming language."
+
+[[commands]]
+package = "elixir"
+
