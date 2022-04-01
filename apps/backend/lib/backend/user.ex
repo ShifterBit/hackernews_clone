@@ -4,7 +4,7 @@ defmodule Backend.User do
   import Ecto.Changeset
 
   schema "users" do
-    field(:name, :string)
+    field(:username, :string)
     field(:hashed_password, :string)
     field(:password, :string, virtual: true)
 
@@ -16,8 +16,9 @@ defmodule Backend.User do
 
   def changeset(user, params \\ %{}) do
     user
-    |> cast(params, [:name])
-    |> validate_length(:name, min: 2)
+    |> cast(params, [:username])
+    |> validate_length(:username, min: 2)
+    |> unique_constraint(:username)
   end
 
   def changeset_with_password(user, params \\ %{}) do

@@ -6,9 +6,13 @@ defmodule Backend.Comment do
   schema "comments" do
     field(:text, :string)
     field(:votes, :integer, default: 0)
-    field(:parent_id, :id)
-    belongs_to(:parent_comment, Comment, foreign_key: :parent_id, references: :id, define_field: false)
-    has_many(:subcomments, Comment, foreign_key: :parent_id, references: :id)
+
+    many_to_many(
+      :replies,
+      Comment,
+      join_through: Backend.Comment.Closure,
+      join_keys: [comment: :id, parent: :id]
+    )
 
     belongs_to(:submission, Submission)
     belongs_to(:posted_by, User, foreign_key: :user_id)
@@ -18,9 +22,27 @@ defmodule Backend.Comment do
 
   def changeset(comment, params \\ %{}) do
     comment
-    |> cast(params, [:text, :votes, :parent_id])
+    |> cast(params, [:text, :votes])
     |> cast_assoc(:posted_by)
     |> validate_required([:text])
     |> validate_length(:text, min: 3)
+  end
+end
+
+defmodule Backend.Comment.Closure do
+  use Ecto.Schema
+
+  schema "comment_closure" do
+    field(:comment, :id)
+    field(:parent, :id)
+  end
+
+  # In MyApp.Relationships.Relationship
+  @attrs [:child_id, :parent_id]
+
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> Ecto.Changeset.cast(params, @attrs)
+    |> Ecto.Changeset.unique_constraint(@attrs)
   end
 end
