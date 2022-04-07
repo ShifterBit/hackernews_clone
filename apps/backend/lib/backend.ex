@@ -1,6 +1,7 @@
 defmodule Backend do
   alias Backend.{Submission, Comment, Repo, User}
   alias Ecto.Changeset
+  import Ecto.Query
 
   def insert_user(params = %{}) do
     %User{}
@@ -25,8 +26,70 @@ defmodule Backend do
     |> Changeset.put_assoc(:submitted_by, user)
   end
 
+  def get_submissions(limit \\ nil) when is_number(limit) or is_nil(limit) do
+    query =
+      from(s in Backend.Submission,
+        select: %{
+          id: s.id,
+          user_id: s.user_id,
+          url: s.url,
+          text: s.text,
+          title: s.title,
+          submitted_at: s.inserted_at
+        }
+      )
+
+    case limit do
+      nil ->
+        Repo.all(query)
+
+      limit ->
+        query = from(s in query, limit: ^limit)
+        Repo.all(query)
+    end
+  end
+
   def get_submission(submission_id) do
     Repo.get!(Submission, submission_id)
+  end
+
+  def upvote_submission(user_id, submission_id) do
+    params = %{submission_id: submission_id, user_id: user_id}
+
+    %Submission.Upvote{}
+    |> Submission.Upvote.changeset(params)
+    |> Repo.insert!()
+  end
+
+  def remove_upvote_from_submission(user_id, submission_id) do
+    query =
+      from(u in Submission.Upvote,
+        where: u.user_id == ^user_id and u.submission_id == ^submission_id,
+        select: u.id
+      )
+
+    id = Repo.one(query)
+    Repo.delete(id)
+  end
+
+  def get_comment_count(submission_id) do
+    query =
+      from(s in Backend.Comment,
+        where: s.submission_id == ^submission_id,
+        select: count(s.id)
+      )
+
+    Repo.one(query)
+  end
+
+  def get_submission_upvote_count(submission_id) do
+    query =
+      from(u in Submission.Upvote,
+        where: u.submission_id == ^submission_id,
+        select: count(u.id)
+      )
+
+    Repo.one(query)
   end
 
   def insert_submission(user_id, params = %{}) do
@@ -56,12 +119,51 @@ defmodule Backend do
     parent
     |> Changeset.change()
     |> Changeset.put_assoc(:replies, [reply | parent.replies])
-    |> Repo.insert_or_update!() |> IO.inspect
+    |> Repo.insert_or_update!()
+    |> IO.inspect()
   end
 
   def insert_comment(user_id, submission_id, params = %{}) do
     create_comment(user_id, submission_id, params)
     |> Repo.insert!()
+  end
+
+  def upvote_comment(user_id, comment_id) do
+    params = %{comment_id: comment_id, user_id: user_id}
+
+    %Comment.Upvote{}
+    |> Comment.Upvote.changeset(params)
+    |> Repo.insert!()
+  end
+
+  def remove_upvote_from_comment(user_id, comment_id) do
+    query =
+      from(u in Comment.Upvote,
+        where: u.user_id == ^user_id and u.comment_id == ^comment_id,
+        select: u.id
+      )
+
+    id = Repo.one(query)
+    Repo.delete(id)
+  end
+
+  def get_ranking(upvote_count, submission_time) do
+    age = NaiveDateTime.diff(NaiveDateTime.utc_now(), submission_time, :second) / (60 * 60)
+    (upvote_count - 1) / (age + 2) ** 1.8
+    # Score = (P-1) / (T+2)^G
+    # P = points
+    # T = Time since submission
+    # Gravity, default 1.8
+  end
+
+  def get_comment_upvote_count(comment_id) do
+    query =
+      from(u in Comment.Upvote,
+        where: u.comment_id == ^comment_id,
+        select: count(u.id)
+      )
+
+    Repo.one(query)
   end
 
   def fake_data() do
@@ -77,7 +179,5 @@ defmodule Backend do
     insert_comment(2, 1, %{text: "another comment"})
 
     insert_reply(1, 1, %{text: "reply to comment"})
-
-
   end
 end

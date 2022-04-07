@@ -9,13 +9,12 @@ defmodule Backend.Repo.Migrations.CreateSubmissionsUsersComments do
       timestamps()
     end
 
-    create(index("users", [:username], unique: true))
+    create unique_index("users", [:username])
 
     create table("submissions") do
       add(:title, :string, null: false)
       add(:text, :string)
       add(:url, :string)
-      add(:votes, :integer)
 
       add(:user_id, references(:users), null: false)
 

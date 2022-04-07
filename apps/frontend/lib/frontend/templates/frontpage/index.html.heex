@@ -1,0 +1,14 @@
+<section>
+  <ul>
+    <li>
+      <%= for submission <- @submissions do %>
+          <a href={submission.data.url}><%= submission.data.title %></a>
+        <%= submission.timestamp %>
+        by <%= submission.user.username %>
+        | <%= submission.comments %> comments
+        
+
+        <% end %>
+    </li>
+  </ul>
+</section>

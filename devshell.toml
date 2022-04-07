@@ -5,6 +5,7 @@ packages = [
   "erlang",
   "sqlite",
   "litecli",
+  "inotify-tools"
 ]
 
 

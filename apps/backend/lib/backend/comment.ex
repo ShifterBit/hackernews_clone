@@ -37,7 +37,6 @@ defmodule Backend.Comment.Closure do
     field(:parent, :id)
   end
 
-  # In MyApp.Relationships.Relationship
   @attrs [:child_id, :parent_id]
 
   def changeset(struct, params \\ %{}) do
@@ -46,3 +45,21 @@ defmodule Backend.Comment.Closure do
     |> Ecto.Changeset.unique_constraint(@attrs)
   end
 end
+
+defmodule Backend.Comment.Upvote do
+  use Ecto.Schema
+
+  schema "comment_upvotes" do
+    field(:comment_id, :id)
+    field(:user_id, :id)
+  end
+
+  @attrs [:comment_id, :user_id]
+
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> Ecto.Changeset.cast(params, @attrs)
+    |> Ecto.Changeset.unique_constraint(@attrs)
+  end
+end
+  
