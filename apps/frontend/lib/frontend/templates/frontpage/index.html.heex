@@ -1,14 +1,26 @@
-<section>
+<section class="submission-list">
   <ul>
-    <li>
-      <%= for submission <- @submissions do %>
-          <a href={submission.data.url}><%= submission.data.title %></a>
-        <%= submission.timestamp %>
-        by <%= submission.user.username %>
-        | <%= submission.comments %> comments
-        
+    <%= for submission <- @submissions do %>
+      <li class="submission">
+        <a class="upvote-arrow">⬆</a>
+        <a class="submission-title" href={submission.data.url}>
+          <%= submission.data.title %>
+        </a>
+        <div class="submission-details">
+          <%= submission.points %> points
+            by <a>
+              <%= submission.user.username %>
+            </a>
+            <a>
+              <%= submission.timestamp %>
+            </a>
+            | <a>
+              <%= submission.comments %> comments
+            </a>
+        </div>
 
-        <% end %>
-    </li>
+
+      </li>
+      <% end %>
   </ul>
 </section>

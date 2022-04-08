@@ -1,0 +1,21 @@
+
+.submission {
+  list-style: none;
+}
+
+.submission > .upvote-arrow {
+  font-size: 2em;
+}
+.submission-title {
+  font-size: 2em;
+}
+.submission-details {
+  font-size: 1em;
+  color: #777;
+}
+.submission-details a {
+  color: #777;
+}
+.submission-details a:hover {
+  text-decoration: underline;
+}
