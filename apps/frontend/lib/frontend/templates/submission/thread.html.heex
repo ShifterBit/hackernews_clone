@@ -1,0 +1,11 @@
+<blockquote>
+  <%= for reply <- @replies do %>
+    <details open>
+      <summary>
+        <%= reply.posted_by.username %>
+      </summary>
+      <%= reply.text %>
+    </details>
+    <%= render(Frontend.SubmissionView, "thread.html", %{replies: reply.replies}) %>
+    <% end %>
+</blockquote>
