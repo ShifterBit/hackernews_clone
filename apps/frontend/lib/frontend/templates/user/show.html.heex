@@ -1,0 +1,8 @@
+<h1>User details</h1>
+<dl>
+<dt>Username</dt>
+<dd><%= @user.username %></dd>
+<br />
+<dt>Created</dt>
+<dd><%= get_timestamp(@user.inserted_at) %></dd>
+</dl>
