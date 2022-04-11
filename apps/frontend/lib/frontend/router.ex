@@ -8,6 +8,7 @@ defmodule Frontend.Router do
     plug :put_root_layout, {Frontend.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Frontend.Authenticator
   end
 
   pipeline :api do
@@ -17,11 +18,15 @@ defmodule Frontend.Router do
   scope "/", Frontend do
     pipe_through :browser
 
-    get "/", PageController, :index
-
-    get "/frontpage", FrontpageController, :index
-
-
+    get "/", FrontpageController, :index
+    get "/item/:id", SubmissionController, :index
+    get "/register", UserController, :new
+    post "/user/new", UserController, :create
+    get "/user/:id", UserController, :show
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+    delete "/logout", SessionController, :delete
+    
   end
 
   # Other scopes may use custom stacks.

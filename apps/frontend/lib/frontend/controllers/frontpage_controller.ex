@@ -21,3 +21,4 @@ defmodule Frontend.FrontpageController do
     render(conn, "index.html", submissions: submissions)
   end
 end
+

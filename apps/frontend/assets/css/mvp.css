@@ -203,9 +203,9 @@ samp {
     padding: 0 0.5rem;
 }
 
-details {
-    margin: 1.3rem 0;
-}
+/* details { */
+/*     margin: 1.3rem 0; */
+/* } */
 
 details summary {
     font-weight: bold;
@@ -463,15 +463,15 @@ table tr:nth-child(even) {
 }
 
 /* Quotes */
-blockquote {
-    display: block;
-    font-size: x-large;
-    line-height: var(--line-height);
-    margin: 1rem auto;
-    max-width: var(--width-card-medium);
-    padding: 1.5rem 1rem;
-    text-align: var(--justify-important);
-}
+/* blockquote { */
+/*     display: block; */
+/*     font-size: x-large; */
+/*     line-height: var(--line-height); */
+/*     margin: 1rem auto; */
+/*     max-width: var(--width-card-medium); */
+/*     padding: 1.5rem 1rem; */
+/*     text-align: var(--justify-important); */
+/* } */
 
 blockquote footer {
     color: var(--color-text-secondary);

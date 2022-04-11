@@ -1,23 +1,34 @@
 defmodule Backend do
-  alias Backend.{Submission, Comment, Repo, User}
+  alias Backend.{Submission, Comment, Repo, User, Password}
   alias Ecto.Changeset
   import Ecto.Query
 
-  def insert_user(params = %{}) do
+  def create_user(), do: User.changeset_with_password(%User{})
+
+  def insert_user(params) do
     %User{}
     |> User.changeset_with_password(params)
-    |> Repo.insert!()
+    |> Repo.insert()
   end
 
   def get_user(user_id) do
-    Repo.get!(User, user_id)
+    Repo.get(User, user_id)
   end
 
   def get_user_by(params) do
-    Repo.get_by!(User, params)
+    Repo.get_by(User, params)
   end
 
-  def create_submission(user_id, params = %{}) do
+  def get_user_by_username_and_password(username, password) do
+    with user when not is_nil(user) <- get_user_by(%{username: username}),
+         true <- Password.verify_password(password, user.hashed_password) do
+      user
+    else
+      _ -> false
+    end
+  end
+
+  def create_submission(user_id, params) do
     user = get_user(user_id)
 
     %Submission{}
@@ -92,12 +103,12 @@ defmodule Backend do
     Repo.one(query)
   end
 
-  def insert_submission(user_id, params = %{}) do
+  def insert_submission(user_id, params) do
     create_submission(user_id, params)
     |> Repo.insert!()
   end
 
-  def create_comment(user_id, submission_id, params = %{}) do
+  def create_comment(user_id, submission_id, params) do
     user = get_user(user_id)
     submission = get_submission(submission_id)
 
@@ -112,7 +123,7 @@ defmodule Backend do
     Repo.get!(Comment, id)
   end
 
-  def insert_reply(user_id, comment_id, params = %{}) do
+  def insert_reply(user_id, comment_id, params) do
     parent = get_comment(comment_id) |> Repo.preload(:replies)
     reply = create_comment(user_id, parent.submission_id, params)
 
@@ -123,7 +134,7 @@ defmodule Backend do
     |> IO.inspect()
   end
 
-  def insert_comment(user_id, submission_id, params = %{}) do
+  def insert_comment(user_id, submission_id, params) do
     create_comment(user_id, submission_id, params)
     |> Repo.insert!()
   end

@@ -7,7 +7,9 @@ defmodule Frontend.SubmissionController do
       |> Backend.get_submission()
       |> Backend.Repo.preload(:comments)
 
-    comments = submission.comments |> Backend.Repo.preload(:posted_by)
+    comments =
+      submission.comments
+      |> Backend.Repo.preload([:posted_by, replies: [:posted_by, :replies]])
 
     render(conn, "index.html", %{submission: submission, comments: comments})
   end
