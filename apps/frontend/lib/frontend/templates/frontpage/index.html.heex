@@ -7,20 +7,21 @@
           <%= submission.data.title %>
         </a>
         <div class="submission-details">
-          <%= submission.points %> points
-            by <a>
-              <%= submission.user.username %>
-            </a>
-            <a>
-              <%= submission.timestamp %>
-            </a>
-            | <a>
-              <%= submission.comments %> comments
-            </a>
+          <%= submission.points %>
+          points
+          by
+          <a>
+            <%= submission.user.username %>
+          </a>
+          <a>
+            <%= submission.timestamp %>
+          </a>
+          |
+          <a>
+            <%= submission.comments %> comments
+          </a>
         </div>
-
-
       </li>
-      <% end %>
+    <% end %>
   </ul>
 </section>

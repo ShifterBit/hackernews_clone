@@ -6,7 +6,7 @@ defmodule Frontend.FrontpageController do
       Backend.get_submissions(30)
       |> Enum.map(fn submission ->
         # submission.user = Backend.get_user(submission.user_id)
-          points = Backend.get_submission_upvote_count(submission.id)
+        points = Backend.get_submission_upvote_count(submission.id)
 
         %{
           data: submission,
@@ -21,4 +21,3 @@ defmodule Frontend.FrontpageController do
     render(conn, "index.html", submissions: submissions)
   end
 end
-

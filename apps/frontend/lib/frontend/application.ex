@@ -13,8 +13,8 @@ defmodule Frontend.Application do
       # Start the Endpoint (http/https)
       Frontend.Endpoint,
       # Start a worker by calling: Frontend.Worker.start_link(arg)
-     {Phoenix.PubSub, name: Frontend.PubSub}
-     # {Frontend.Worker, arg}
+      {Phoenix.PubSub, name: Frontend.PubSub}
+      # {Frontend.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

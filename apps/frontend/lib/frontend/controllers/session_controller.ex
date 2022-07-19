@@ -6,13 +6,14 @@ defmodule Frontend.SessionController do
   end
 
   def create(conn, %{"user" => %{"username" => username, "password" => password}}) do
-    case Backend.get_user_by_username_and_password(username, password) do 
-      %Backend.User{} = user -> 
+    case Backend.get_user_by_username_and_password(username, password) do
+      %Backend.User{} = user ->
         conn
         |> put_session(:user_id, user.id)
         |> put_flash(:info, "Successfully logged in")
         |> redirect(to: Routes.user_path(conn, :show, user))
-      _ -> 
+
+      _ ->
         conn
         |> put_flash(:error, "That username and password combination cannot be found")
         |> render("new.html")

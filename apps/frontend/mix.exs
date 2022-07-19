@@ -38,7 +38,7 @@ defmodule Frontend.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.6.6"},
-      {:backend, in_umbrella: true },
+      {:backend, in_umbrella: true},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.17.5"},
