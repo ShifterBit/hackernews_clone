@@ -1,3 +1,7 @@
-(import (fetchTarball https://github.com/edolstra/flake-compat/archive/master.tar.gz) {
-  src = builtins.fetchGit ./.;
-}).shellNix
+{
+  pkgs ? import <nixpkgs> {},
+  mkShellNoCC ? pkgs.mkShellNoCC,
+}:
+mkShellNoCC {
+  buildInputs = with pkgs; [elixir erlang inotify-tools sqlite];
+}
