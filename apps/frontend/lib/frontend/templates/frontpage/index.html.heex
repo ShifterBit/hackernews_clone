@@ -11,14 +11,17 @@
           points
           by
           <a>
-            <%= submission.user.username %>
+            <%= link("#{submission.user.username}",
+              to: Routes.user_path(@conn, :show, submission.user.id)) %>
           </a>
           <a>
-            <%= submission.timestamp %>
+            <%= link("#{submission.timestamp}",
+              to: Routes.submission_path(@conn, :index, submission.user.id)) %>
           </a>
           |
           <a>
-            <%= submission.comments %> comments
+            <%= link("#{submission.comments} comments",
+              to: Routes.submission_path(@conn, :index, submission.user.id)) %>
           </a>
         </div>
       </li>

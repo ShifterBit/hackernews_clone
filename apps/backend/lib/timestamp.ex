@@ -33,6 +33,7 @@ defmodule Timestamp do
       minutes > 1 -> "#{minutes} minutes ago"
       seconds == 1 -> "1 second ago"
       seconds > 1 -> "#{seconds} seconds ago"
+      true -> "a moment ago"
     end
   end
 end

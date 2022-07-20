@@ -62,4 +62,3 @@ defmodule Backend.Comment.Upvote do
     |> Ecto.Changeset.unique_constraint(@attrs)
   end
 end
-  
