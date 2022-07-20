@@ -19,29 +19,34 @@
   <body>
     <header>
       <nav class="nav-bar">
-        <h2><%= link("Frontpage", to: Routes.frontpage_path(@conn, :index)) %></h2>
-        <%= if @current_user do %>
-          <ul>
-            <li>
-              Logged in as
-              <%= link(@current_user.username,
-                to: Routes.user_path(@conn, :show, @current_user.id)
-              ) %>
-            </li>
-            <li>
-              <%= link("Log out", to: Routes.session_path(@conn, :delete), method: :delete) %>
-            </li>
-          </ul>
-        <% else %>
-          <ul>
-            <li>
-              <%= link("Sign up", to: Routes.user_path(@conn, :new)) %>
-            </li>
-            <li>
-              <%= link("Log in", to: Routes.session_path(@conn, :new)) %>
-            </li>
-          </ul>
-        <% end %>
+        <h2>
+        <%= link("Frontpage", to: Routes.frontpage_path(@conn, :index)) %>
+      </h2>
+          <%= if @current_user do %>
+            <ul>
+              <li>
+              <%= link("Submit", to: Routes.submission_path(@conn, :new)) %>
+              </li>
+              <li>
+                Logged in as
+                <%= link(@current_user.username,
+                  to: Routes.user_path(@conn, :show, @current_user.id)
+                ) %>
+              </li>
+              <li>
+                <%= link("Log out", to: Routes.session_path(@conn, :delete), method: :delete) %>
+              </li>
+            </ul>
+          <% else %>
+            <ul>
+              <li>
+                <%= link("Sign up", to: Routes.user_path(@conn, :new)) %>
+              </li>
+              <li>
+                <%= link("Log in", to: Routes.session_path(@conn, :new)) %>
+              </li>
+            </ul>
+          <% end %>
       </nav>
     </header>
     <%= @inner_content %>

@@ -28,7 +28,7 @@ defmodule Backend do
     end
   end
 
-  def create_submission(user_id, params) do
+  def create_submission(user_id, params \\ %{}) do
     user = get_user(user_id)
 
     %Submission{}
@@ -105,7 +105,7 @@ defmodule Backend do
 
   def insert_submission(user_id, params) do
     create_submission(user_id, params)
-    |> Repo.insert!()
+    |> Repo.insert()
   end
 
   def create_comment(user_id, submission_id, params) do

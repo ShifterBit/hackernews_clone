@@ -15,7 +15,7 @@ defmodule Backend.Submission do
 
   def changeset(submission, params \\ %{}) do
     submission
-    |> cast(params, [:title, :text, :url, :votes])
+    |> cast(params, [:title, :text, :url])
     |> validate_required([:title])
     |> cast_assoc(:submitted_by)
   end

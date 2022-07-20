@@ -20,6 +20,8 @@ defmodule Frontend.Router do
 
     get "/", FrontpageController, :index
     get "/item/:id", SubmissionController, :index
+    post "/item/new", SubmissionController, :create
+    get "/submit", SubmissionController, :new
     get "/register", UserController, :new
     post "/user/new", UserController, :create
     get "/user/:id", UserController, :show

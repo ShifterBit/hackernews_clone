@@ -2,7 +2,8 @@
 <%= form_for @user, Routes.user_path(@conn, :create), fn f -> %>
   <%= if @user.action do %>
     <div class="alert alert-danger">
-      Unfortunately, there are some errors in your submission.class Please correct them below.
+      Unfortunately, there are some errors in your submission.
+      Please correct them below.
     </div>
   <% end %>
 

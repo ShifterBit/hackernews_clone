@@ -8,9 +8,31 @@ defmodule Frontend.SubmissionController do
       |> Backend.Repo.preload(:comments)
 
     comments =
-      submission.comments
-      |> Backend.Repo.preload([:posted_by, replies: [:posted_by, :replies]])
+      case length(submission.comments) do
+        0 ->
+          []
+
+        _ ->
+          submission.comments
+          |> Backend.Repo.preload([:posted_by, replies: [:posted_by, :replies]])
+      end
 
     render(conn, "index.html", %{submission: submission, comments: comments})
+  end
+
+  def new(conn, _params) do
+    user_id = get_session(conn, :user_id)
+    submission = Backend.create_submission(user_id)
+
+    render(conn, "new.html", submission: submission, user_id: user_id)
+  end
+
+  def create(conn, %{"submission" => params}) do
+    id = get_session(conn, :user_id)
+
+    case Backend.insert_submission(id, params) do
+      {:ok, submission} -> redirect(conn, to: Routes.submission_path(conn, :index, submission.id))  |> IO.inspect()
+      {:error, submission} -> render(conn, "new.html", submission: submission)
+    end
   end
 end

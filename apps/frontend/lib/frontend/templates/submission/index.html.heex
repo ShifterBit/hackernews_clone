@@ -2,14 +2,16 @@
   <%= @submission.title %> <span class="submission-details">(<%= @submission.url %>)</span>
 </h1>
 
-<%= for comment <- @comments do %>
-  <details open class="comment-thread">
-    <summary class="comment-text">
-      <%= comment.posted_by.username %>
-    </summary>
-    <div>
-      <%= comment.text %>
-    </div>
-    <%= render(Frontend.SubmissionView, "thread.html", %{replies: comment.replies}) %>
-  </details>
+<%= if length(@comments) > 0 do %>
+  <%= for comment <- @comments do %>
+    <details open class="comment-thread">
+      <summary class="comment-text">
+        <%= comment.posted_by.username %>
+      </summary>
+      <div>
+        <%= comment.text %>
+      </div>
+      <%= render(Frontend.SubmissionView, "thread.html", %{replies: comment.replies}) %>
+    </details>
+  <% end %>
 <% end %>
