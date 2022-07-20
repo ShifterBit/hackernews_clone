@@ -1,4 +1,3 @@
-# HackernewsClone
+# Hacker News Clone
 
-**TODO: Add description**
 
