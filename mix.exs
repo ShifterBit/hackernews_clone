@@ -6,7 +6,14 @@ defmodule HackernewsClone.MixProject do
       apps_path: "apps",
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      releases: [
+        hn_server: [
+          applications: [frontend: :permanent, backend: :permanent],
+          include_executable_for: [:unix]
+        ]
+
+      ]
     ]
   end
 
