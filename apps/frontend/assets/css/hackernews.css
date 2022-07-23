@@ -22,6 +22,7 @@ main.container {
   font-size: 2rem;
 }
 
+
 .submission-title {
   font-size: 2rem;
 }
@@ -45,6 +46,6 @@ main.container {
 }
 
 .comment-text {
-  display: flex;
+  display: list-item;
   word-wrap: normal;
 }
