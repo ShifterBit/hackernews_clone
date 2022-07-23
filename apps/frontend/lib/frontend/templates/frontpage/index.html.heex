@@ -7,21 +7,23 @@
           <%= submission.data.title %>
         </a>
         <div class="submission-details">
-          <%= submission.points %>
-          points
+          <%= submission.points %> points
           by
           <a>
             <%= link("#{submission.user.username}",
-              to: Routes.user_path(@conn, :show, submission.data.id)) %>
+              to: Routes.user_path(@conn, :show, submission.data.id)
+            ) %>
           </a>
           <a>
             <%= link("#{submission.timestamp}",
-              to: Routes.submission_path(@conn, :index, submission.data.id)) %>
+              to: Routes.submission_path(@conn, :index, submission.data.id)
+            ) %>
           </a>
           |
           <a>
             <%= link("#{submission.comments} comments",
-              to: Routes.submission_path(@conn, :index, submission.data.id)) %>
+              to: Routes.submission_path(@conn, :index, submission.data.id)
+            ) %>
           </a>
         </div>
       </li>
