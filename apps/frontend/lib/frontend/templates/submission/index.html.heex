@@ -4,14 +4,19 @@
 
 <%= if length(@comments) > 0 do %>
   <%= for comment <- @comments do %>
-    <details open class="comment-thread">
-      <summary class="comment-text">
-        <%= comment.posted_by.username %>
-      </summary>
-      <div>
+    <blockquote>
+      <details open class="comment-thread">
+        <summary class="comment-text">
+          <%= link(comment.posted_by.username,
+            to: Routes.user_path(@conn, :show, comment.posted_by.id)
+          ) %>
+        </summary>
         <%= comment.text %>
-      </div>
-      <%= render(Frontend.SubmissionView, "thread.html", %{replies: comment.replies}) %>
-    </details>
+        <%= render(Frontend.SubmissionView, "thread.html", %{
+          replies: comment.replies,
+          conn: @conn
+        }) %>
+      </details>
+    </blockquote>
   <% end %>
 <% end %>

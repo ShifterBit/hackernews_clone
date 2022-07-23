@@ -1,11 +1,15 @@
-<blockquote>
-  <%= for reply <- @replies do %>
-    <details open>
-      <summary>
-        <%= reply.posted_by.username %>
-      </summary>
-      <%= reply.text %>
-    </details>
-    <%= render(Frontend.SubmissionView, "thread.html", %{replies: reply.replies}) %>
-  <% end %>
-</blockquote>
+<%= if length(@replies) > 0 do %>
+  <blockquote>
+    <%= for reply <- @replies do %>
+      <details open>
+        <summary class="comment-text">
+          <%= link(reply.posted_by.username,
+            to: Routes.user_path(@conn, :show, reply.posted_by.id)
+          ) %>
+        </summary>
+        <%= reply.text %>
+      </details>
+      <%= render(Frontend.SubmissionView, "thread.html", %{replies: reply.replies}) %>
+    <% end %>
+  </blockquote>
+<% end %>
