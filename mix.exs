@@ -12,7 +12,6 @@ defmodule HackernewsClone.MixProject do
           applications: [frontend: :permanent, backend: :permanent],
           include_executable_for: [:unix]
         ]
-
       ]
     ]
   end
@@ -23,6 +22,8 @@ defmodule HackernewsClone.MixProject do
   #
   # Run "mix help deps" for examples and options.
   defp deps do
-    []
+    [
+      {:phoenix_live_view, "~> 0.17.5"}
+    ]
   end
 end

@@ -1,5 +1,6 @@
 # Used by "mix format"
 [
-  inputs: ["mix.exs", "config/*.exs"],
-  subdirectories: ["apps/*"]
+  plugins: [Phoenix.LiveView.HTMLFormatter],
+  subdirectories: ["apps/*"],
+  inputs: ["*.{heex,ex,exs}", "priv/*/seeds.exs", "{config,lib,test}/**/*.{heex,ex,exs}"]
 ]
