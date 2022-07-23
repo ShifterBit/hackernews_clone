@@ -31,6 +31,6 @@ erl_crash.dump
 *.db-wa/
 /result
 
-/priv/static
-!priv/static/favicon.ico
-!/priv/static/robots.txt
+/apps/frontend/priv/static
+!/apps/frontend/priv/static/favicon.ico
+!/apps/frontend/priv/static/robots.txt
