@@ -17,7 +17,14 @@ defmodule Frontend.SubmissionController do
           |> Backend.Repo.preload([:posted_by, replies: [:posted_by, :replies]])
       end
 
-    render(conn, "index.html", %{submission: submission, comments: comments})
+    render(conn, "index.html", %{
+      submission: submission,
+      comments: comments,
+      user: Backend.get_user(submission.user_id),
+      points: Backend.get_comment_upvote_count(submission.id),
+      comment_count: Backend.get_comment_count(submission.id),
+      timestamp: Timestamp.relative_timestamp(submission.inserted_at)
+    })
   end
 
   def new(conn, _params) do

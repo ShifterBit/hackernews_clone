@@ -1,5 +1,25 @@
 <h1>
   <%= @submission.title %> <span class="submission-details">(<%= @submission.url %>)</span>
+  <div class="submission-details">
+    <%= @points %> points
+    by
+    <a>
+      <%= link("#{@user.username}",
+        to: Routes.user_path(@conn, :show, @submission.id)
+      ) %>
+    </a>
+    <a>
+      <%= link("#{@timestamp}",
+        to: Routes.submission_path(@conn, :index, @submission.id)
+      ) %>
+    </a>
+    |
+    <a>
+      <%= link("#{@comment_count} comments",
+        to: Routes.submission_path(@conn, :index, @submission.id)
+      ) %>
+    </a>
+  </div>
 </h1>
 
 <%= if length(@comments) > 0 do %>
