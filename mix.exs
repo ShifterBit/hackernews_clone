@@ -23,7 +23,8 @@ defmodule HackernewsClone.MixProject do
   # Run "mix help deps" for examples and options.
   defp deps do
     [
-      {:phoenix_live_view, "~> 0.17.5"}
+      {:phoenix_live_view, "~> 0.17.5"},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
   end
 end
