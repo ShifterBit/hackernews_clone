@@ -39,10 +39,11 @@ defmodule Frontend.SubmissionController do
 
     case Backend.insert_submission(id, params) do
       {:ok, submission} ->
-        redirect(conn, to: Routes.submission_path(conn, :index, submission.id)) |> IO.inspect()
+        redirect(conn, to: Routes.submission_path(conn, :index, submission.id))
 
       {:error, submission} ->
         render(conn, "new.html", submission: submission)
     end
   end
+
 end

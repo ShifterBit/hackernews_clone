@@ -131,7 +131,6 @@ defmodule Backend do
     |> Changeset.change()
     |> Changeset.put_assoc(:replies, [reply | parent.replies])
     |> Repo.insert_or_update!()
-    |> IO.inspect()
   end
 
   def insert_comment(user_id, submission_id, params) do
