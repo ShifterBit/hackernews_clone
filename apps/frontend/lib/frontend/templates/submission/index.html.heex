@@ -15,6 +15,12 @@
     </a>
     |
     <a>
+      <%= link("unvote",
+        to: Routes.submission_path(@conn, :index, @submission.id)
+      ) %>
+    </a>
+    |
+    <a>
       <%= link("#{@comment_count} comments",
         to: Routes.submission_path(@conn, :index, @submission.id)
       ) %>

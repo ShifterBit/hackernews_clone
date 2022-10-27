@@ -2,7 +2,14 @@
   <ul class="submission-list">
     <%= for submission <- @submissions do %>
       <li class="submission">
-        <a class="upvote-arrow">⬆</a>
+        <a class="upvote-arrow">
+          <%= unless submission.is_upvoted do %>
+            <%= link("🔺",
+              to: Routes.submission_path(@conn, :vote, submission.data.id),
+              method: :post
+            ) %>
+          <% end %>
+        </a>
         <a class="submission-title" href={submission.data.url}>
           <%= submission.data.title %>
         </a>
@@ -20,6 +27,15 @@
             ) %>
           </a>
           |
+          <%= if submission.is_upvoted do %>
+            <a>
+              <%= link("unvote",
+                to: Routes.submission_path(@conn, :vote, submission.data.id),
+                method: :post
+              ) %>
+            </a>
+            |
+          <% end %>
           <a>
             <%= link("#{submission.comments} comments",
               to: Routes.submission_path(@conn, :index, submission.data.id)

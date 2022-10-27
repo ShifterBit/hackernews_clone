@@ -46,4 +46,15 @@ defmodule Frontend.SubmissionController do
     end
   end
 
+  def vote(conn, %{"id" => submission_id}) do
+    id = get_session(conn, :user_id)
+
+    if is_nil(id) do
+      redirect(conn, to: Routes.session_path(conn, :new))
+    else
+      case Backend.upvote_submission(id, submission_id) do
+        _ -> redirect(conn, to: Routes.frontpage_path(conn, :index))
+      end
+    end
+  end
 end

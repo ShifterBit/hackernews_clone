@@ -64,23 +64,30 @@ defmodule Backend do
     Repo.get!(Submission, submission_id)
   end
 
+  def is_upvoted_by?(user_id, target_id, target_type) do
+    case target_type do
+      :submission ->
+        not is_nil(Repo.get_by(Submission.Upvote, user_id: user_id, submission_id: target_id))
+
+      :comment ->
+        not is_nil(Repo.get_by(Comment.Upvote, user_id: user_id, comment_id: target_id))
+    end
+  end
+
   def upvote_submission(user_id, submission_id) do
     params = %{submission_id: submission_id, user_id: user_id}
 
-    %Submission.Upvote{}
-    |> Submission.Upvote.changeset(params)
-    |> Repo.insert!()
-  end
-
-  def remove_upvote_from_submission(user_id, submission_id) do
-    query =
+    if is_upvoted_by?(user_id, submission_id, :submission) do
       from(u in Submission.Upvote,
         where: u.user_id == ^user_id and u.submission_id == ^submission_id,
         select: u.id
       )
-
-    id = Repo.one(query)
-    Repo.delete(id)
+      |> Repo.delete_all()
+    else
+      %Submission.Upvote{}
+      |> Submission.Upvote.changeset(params)
+      |> Repo.insert()
+    end
   end
 
   def get_comment_count(submission_id) do

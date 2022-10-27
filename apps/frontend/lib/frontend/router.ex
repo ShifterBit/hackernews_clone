@@ -24,6 +24,7 @@ defmodule Frontend.Router do
     get "/submit", SubmissionController, :new
     get "/register", UserController, :new
     post "/user/new", UserController, :create
+    post "/item/:id/vote", SubmissionController, :vote
     get "/user/:id", UserController, :show
     get "/login", SessionController, :new
     post "/login", SessionController, :create
